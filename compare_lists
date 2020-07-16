@@ -1,0 +1,39 @@
+first_list = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N']
+second_list = ['B', 'C', 'D', 'A', 'F', 'E', 'Z', 'M', 'N', 'J', 'K', 'L']
+letters_dict = {}
+
+
+for i in first_list:
+    letters_dict.update({i: {'first_list': first_list.index(i), 'second_list': None}})
+
+
+for i in second_list:
+    try:
+        letters_dict.get(i).update({'second_list': second_list.index(i)})
+    except AttributeError:
+        letters_dict.update({i: {'first_list': None, 'second_list': second_list.index(i)}})
+
+
+for i in letters_dict:
+    comparison = []
+    for k, v in letters_dict[i].items():
+        comparison.append(v)
+
+        if v is None:
+            if k == 'first_list':
+                print(f'"{i}" added in the second_list [{second_list.index(i)}]')
+            elif k == 'second_list':
+                print(f'"{i}" removed from the first_list')
+
+        if len(comparison) == 2:
+            try:
+                if comparison[0] == comparison[1]:
+                    print(f'"{i}" is on the same place in both lists [{comparison[0]}]')
+                elif comparison[0] > comparison[1]:
+                    print(f'"{i}" shifted on the left side on {comparison[0] - comparison[1]} positions [{comparison[0]}'
+                          f' --> {comparison[1]}]')
+                elif comparison[0] < comparison[1]:
+                    print(f'"{i}" shifted on the right side on {comparison[1] - comparison[0]} positions [{comparison[0]}'
+                          f' --> {comparison[1]}]')
+            except TypeError:
+                pass
